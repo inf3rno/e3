@@ -10,7 +10,7 @@ The Ezone class framework contains enhanced error handling to ease the developme
 ### Installation
 
 ```bash
-npm install e3
+npm install ezone
 ```
 
 ```bash
