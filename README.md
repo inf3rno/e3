@@ -1,9 +1,8 @@
-# e3
-The EZone lib contains an Error API to make error handling and custom error creation uniform and much easier in different javascript environments.
+# EZone - Javscript Error API
 
 [![Build Status](https://travis-ci.org/inf3rno/e3.png?branch=master)](https://travis-ci.org/inf3rno/e3)
 
-The Ezone class framework contains enhanced error handling to ease the development of object-oriented javascript applications in an ES5 environment.
+The EZone lib contains enhanced error handling to ease the development of object-oriented javascript applications in an ES5 environment.
 
 ## Documentation
 
