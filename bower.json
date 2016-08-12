@@ -1,0 +1,43 @@
+{
+  "name": "e3",
+  "version": "0.16.1",
+  "description": "e3 - Javascript Error Framework",
+  "keywords": [
+    "ES5",
+    "error",
+    "user error",
+    "composite error",
+    "stack trace"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "László Lajos Jánszky"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inf3rno/e3"
+  },
+  "main": "index.js",
+  "ignore": [
+    ".idea/",
+    "node_modules/",
+    ".gitignore",
+    ".npmignore",
+    ".travis.yml",
+    "package.json"
+  ],
+  "scripts": {
+    "test": "mocha --reporter spec yadda.js"
+  },
+  "dependencies": {
+    "o3": "^1.0.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3",
+    "yadda": "^0.17.2"
+  }
+}
