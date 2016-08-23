@@ -1,6 +1,6 @@
 {
   "name": "ezone",
-  "version": "0.16.1",
+  "version": "0.17.0",
   "description": "e3 - Javascript Error Framework",
   "keywords": [
     "ES5",
@@ -25,7 +25,8 @@
     "test-karma": "karma start karma.conf.js"
   },
   "dependencies": {
-    "o3": "^1.0.0"
+    "capability": "^0.2.3",
+    "o3": "^1.0.2"
   },
   "devDependencies": {
     "browserify": "10.2.6",

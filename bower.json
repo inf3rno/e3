@@ -1,6 +1,6 @@
 {
   "name": "e3",
-  "version": "0.16.1",
+  "version": "0.17.0",
   "description": "e3 - Javascript Error Framework",
   "keywords": [
     "ES5",
@@ -26,13 +26,17 @@
     ".gitignore",
     ".npmignore",
     ".travis.yml",
-    "package.json"
+    "package.json",
+    "features/",
+    "karma.conf.js",
+    "yadda.js"
   ],
   "scripts": {
     "test": "mocha --reporter spec yadda.js"
   },
   "dependencies": {
-    "o3": "^1.0.0"
+    "capability": "^0.2.2",
+    "o3": "^1.0.2"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
