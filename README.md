@@ -79,6 +79,9 @@ catch (theProblem) {
 }
 ```
 
+*Warning:*
+&nbsp;&nbsp;&nbsp;&nbsp;*Overriding `factory`, `prototype.constructor` and `prototype.clone` is [not recommended](https://github.com/inf3rno/e3/issues/21) by UserError descendants!*
+
 #### Creating composite errors
 
 You can create composite errors with the CompositeError class if you want to report about complex problems, which can only be described by a hierarchy of error objects.
@@ -134,7 +137,8 @@ catch (error) {
 
 The NativeError wrapper can help you log the native errors of your client side applications for further investigation.
 
-Be aware that the NativeError wrapper works only on the instances of Error or Error subclasses, so you won't be able to wrap a string or a regular object.
+*Warning:*
+&nbsp;&nbsp;&nbsp;&nbsp;*The NativeError wrapper checks for `instanceof Error`, so it won't work with strings or inline objects!*
 
 ### Stack traces and frames
 
@@ -149,6 +153,10 @@ var error = new UserError("message");
 console.log(error.stack instanceof Stack); // true
 ```
 
+*Warning:*
+&nbsp;&nbsp;&nbsp;&nbsp;*The `error.stack` property is read-only by the classes defined in this lib!*
+&nbsp;&nbsp;&nbsp;&nbsp;*The `Error.prepareStackTrace` method is modified and it is read-only! This may interfere with other stack libs e.g. [cute-stack](https://github.com/davidmarkclements/cute-stack)!*
+
 By native errors you need a NativeError wrapper to access the `error.stack` property.
 
 ```js
@@ -160,7 +168,8 @@ try {
 }
 ```
 
-Reading the `error.stack` directly returns only a raw stack string in most of the environments, so it is not recommended.
+*Warning:*
+&nbsp;&nbsp;&nbsp;&nbsp;*Reading the `error.stack` directly returns only a raw stack string in most of the environments, so it is not recommended!*
 
 If you have your Stack instance, you can access the frames array by reading the `stack.frames` property.
 
@@ -193,11 +202,11 @@ To access information about individual frames you can use these methods:
 
 You can read more about them in the [V8 Stack Trace API documentation](https://github.com/v8/v8/wiki/Stack-Trace-API).
 
-#### Stack trace limits
+#### Stack trace size limits
 
 Not implemented yet.
 
-### Uncaught errors and rejections
+### Handling uncaught errors and rejections
 
 Not implemented yet.
 

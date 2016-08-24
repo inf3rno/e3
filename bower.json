@@ -1,6 +1,6 @@
 {
   "name": "e3",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "description": "e3 - Javascript Error Framework",
   "keywords": [
     "ES5",
@@ -35,7 +35,7 @@
     "test": "mocha --reporter spec yadda.js"
   },
   "dependencies": {
-    "capability": "^0.2.2",
+    "capability": "^0.2.4",
     "o3": "^1.0.2"
   },
   "devDependencies": {
