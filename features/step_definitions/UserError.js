@@ -58,7 +58,8 @@ module.exports = function () {
             anInstance = new aDescendant("message");
         };
         factory();
-        expect(anInstance.stack.frames[0].getFunction() === factory).to.be.ok();
+        if (anInstance.stack.frames[0].getFunction())
+            expect(anInstance.stack.frames[0].getFunction() === factory).to.be.ok();
         expect(/factory/.test(anInstance.stack.frames[0].toString())).to.be.ok();
         next();
     });
@@ -84,6 +85,30 @@ module.exports = function () {
 
     this.Then(/^the function value of the frames should be undefined because strict mode does not support arguments.callee$/, function (next) {
         expect(anInstance.stack.frames[0].getFunction() === undefined).to.be.ok();
+        next();
+    });
+
+    this.When(/^I create an user error descendant which overrides the constructor or the clone$/, function (next) {
+        aDescendant = UserError.extend({
+            prototype: {
+                constructor: function () {
+                    UserError.call(this, "message");
+                },
+                clone: function () {
+                    return UserError.prototype.clone.call(this);
+                }
+            }
+        });
+        next();
+    });
+
+    this.Then(/^it should not be able to call the constructor and clone methods of the ancestor$/, function (next) {
+        expect(function () {
+            anInstance = new aDescendant();
+        }).to.throwError();
+        expect(function () {
+            anInstance = aDescendant.prototype.clone();
+        }).to.throwError();
         next();
     });
 };

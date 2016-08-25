@@ -80,7 +80,7 @@ catch (theProblem) {
 ```
 
 *Warning:*
-&nbsp;&nbsp;&nbsp;&nbsp;*Overriding `factory`, `prototype.constructor` and `prototype.clone` is [not recommended](https://github.com/inf3rno/e3/issues/21) by UserError descendants!*
+&nbsp;&nbsp;&nbsp;&nbsp;*Overriding and reusing the `constructor` and the `clone` method is not possible by descendant classes, use `build` and `init` instead!*
 
 #### Creating composite errors
 

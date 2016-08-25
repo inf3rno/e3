@@ -19,3 +19,7 @@ Feature: UserError
     When I create an user error descendant in strict mode
     Then the stack property should be created without causing any error related to strict mode
     And the function value of the frames should be undefined because strict mode does not support arguments.callee
+
+  Scenario: extending user errors and overriding constructor or clone
+    When I create an user error descendant which overrides the constructor or the clone
+    Then it should not be able to call the constructor and clone methods of the ancestor
