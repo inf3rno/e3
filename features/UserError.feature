@@ -10,6 +10,7 @@ Feature: UserError
   Scenario: using the stack of user errors
     When I create a new user error instance
     Then the stack property should contain the type, the message and the stack frames of this instance
+    And the stack property should not be configurable, writable or enumerable
 
   Scenario: extending user errors
     When I create an user error descendant

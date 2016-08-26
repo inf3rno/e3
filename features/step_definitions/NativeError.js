@@ -32,6 +32,14 @@ module.exports = function () {
         next();
     });
 
+    this.Then(/^the stack property should not be configurable, writable or enumerable$/, function (next) {
+        var descriptor = Object.getOwnPropertyDescriptor(anInstance, "stack");
+        expect(descriptor.configurable).to.be(false);
+        expect(!!descriptor.get).to.be.ok();
+        expect(descriptor.enumerable).to.be(false);
+        next();
+    });
+
 
     this.When(/^I wrap an error instance with multi line name and message$/, function (next) {
         var firstFn = function firstFn() {
