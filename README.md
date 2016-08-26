@@ -1,8 +1,8 @@
-# EZone - Javscript Error API
+# EZone - Javscript Error Framework
 
 [![Build Status](https://travis-ci.org/inf3rno/e3.png?branch=master)](https://travis-ci.org/inf3rno/e3)
 
-The EZone lib contains enhanced error handling to ease the development of object-oriented javascript applications in an ES5 environment.
+The EZone framework implements a V8 Error API polyfill as much as possible and adds new error handling related features to the system.
 
 ## Documentation
 
