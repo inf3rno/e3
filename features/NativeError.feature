@@ -6,7 +6,7 @@ Feature: NativeError
   Scenario: using the stack of native errors
     When I create a new native error instance and I wrap that instance
     Then the stack property should contain the type, the message and the stack frames of this native error
-    And the stack property should not be configurable, writable or enumerable
+    And the stack property should have a getter and be configurable, but not enumerable
 
   Scenario: using multi line name and message
     When I wrap an error instance with multi line name and message

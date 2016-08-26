@@ -1,13 +1,15 @@
 {
   "name": "ezone",
-  "version": "0.18.3",
+  "version": "0.18.4",
   "description": "e3 - Javascript Error Framework",
   "keywords": [
     "ES5",
     "error",
     "user error",
     "composite error",
-    "stack trace"
+    "extendable",
+    "stack trace",
+    "V8 Error API polyfill"
   ],
   "license": "MIT",
   "author": "László Lajos Jánszky",
