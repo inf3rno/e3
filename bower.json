@@ -1,6 +1,6 @@
 {
   "name": "e3",
-  "version": "0.18.5",
+  "version": "0.19.0",
   "description": "e3 - Javascript Error Framework",
   "keywords": [
     "ES5",
@@ -9,7 +9,14 @@
     "composite error",
     "extendable",
     "stack trace",
-    "V8 Error API polyfill"
+    "polyfill",
+    "v8",
+    "Error.captureStackTrace",
+    "Error.prepareStackTrace",
+    "Error.getStackTrace",
+    "UserError",
+    "CompositeError",
+    "stack"
   ],
   "license": "MIT",
   "authors": [

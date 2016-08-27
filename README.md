@@ -44,11 +44,29 @@ The [capability](https://github.com/inf3rno/capability) and the [o3](https://git
 In this documentation I used the framework as follows:
 
 ```js
-var e3 = require("e3"),
+var e3 = require("ezone"),
     UserError = e3.UserError,
     CompositeError = e3.CompositeError,
-    NativeError = e3.NativeError;
+    NativeError = e3.NativeError,
+    Stack = e3.Stack,
+    CompositeStack = e3.CompositeStack;
 ```
+
+### Polyfills
+
+If polyfills are all you need, then use `require("ezone/polyfill");`.
+
+#### Error.captureStackTrace
+
+Currently the `Error.captureStackTrace(targetObject [, constructorOpt])` is partially supported in non-V8 environments.
+
+ - It does not use the `Error.prepareStackTrace` yet to format the stack.
+ - It does not work if the `constructorOpt` is not the direct caller of this function.
+
+#### Error.getStackTrace
+
+I implemented an `Error.getStackTrace(error)` method. I needed this because there is not way in non-V8 environments to automatically override the `error.stack` property by native error instances. By V8 the `Error.prepareStackTrace` solves this problem.
+It is strongly recommended to use `Error.getStackTrace(error)` to get the stack of native errors, instead of using `error.stack`. As far as I know there is no way currently to workaround this, only writing a compiler could do that.
 
 ### Errors
 
