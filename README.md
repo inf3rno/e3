@@ -58,15 +58,15 @@ If polyfills are all you need, then use `require("ezone/polyfill");`.
 
 #### Error.captureStackTrace
 
-Currently the `Error.captureStackTrace(targetObject [, constructorOpt])` is partially supported in non-V8 environments.
+Currently the `Error.captureStackTrace(targetObject [, constructorOpt])` is partially supported in non-V8 environments. It does not work if the `constructorOpt` is not the direct caller of this function.
 
- - It does not use the `Error.prepareStackTrace` yet to format the stack.
- - It does not work if the `constructorOpt` is not the direct caller of this function.
+#### Error.prepareStackTrace
+
+The `Error.prepareStackTrace(throwable, frames [, comments])` is supported by the library. The third parameter can contain an array of stack parser warnings.
 
 #### Error.getStackTrace
 
-I implemented an `Error.getStackTrace(error)` method. I needed this because there is not way in non-V8 environments to automatically override the `error.stack` property by native error instances. By V8 the `Error.prepareStackTrace` solves this problem.
-It is strongly recommended to use `Error.getStackTrace(error)` to get the stack of native errors, instead of using `error.stack`. As far as I know there is no way currently to workaround this, only writing a compiler could do that.
+By V8 the `Error.prepareStackTrace` is automatically called by trying to get the stack of any native error. Sadly on non-V8 environments there is on way to implement the same feature. So using `Error.getStackTrace(error)` is recommended by getting the stack of an Error instance.
 
 ### Errors
 
