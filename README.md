@@ -65,8 +65,7 @@ catch (theProblem) {
 }
 ```
 
-*Warning:*
-&nbsp;&nbsp;&nbsp;&nbsp;*Overriding and reusing the `constructor` and the `clone` method is not possible by descendant classes, use `build` and `init` instead!*
+Overriding and reusing the `constructor` and the `clone` method is not recommended by descendant classes, use `build` and `init` instead!
 
 #### Creating composite errors
 
