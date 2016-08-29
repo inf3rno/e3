@@ -1,4 +1,4 @@
-# ErrorZone - Javscript Error Framework
+# ErrorZone - Javascript Error Framework
 
 [![Build Status](https://travis-ci.org/inf3rno/e3.png?branch=master)](https://travis-ci.org/inf3rno/e3)
 
