@@ -1,7 +1,7 @@
 {
   "name": "ezone",
-  "version": "0.19.1",
-  "description": "e3 - Javascript Error Framework",
+  "version": "0.20.0",
+  "description": "ErrorZone - Javascript Error Framework",
   "keywords": [
     "ES5",
     "V8",
@@ -26,7 +26,7 @@
     "test-karma": "karma start karma.conf.js"
   },
   "dependencies": {
-    "error-polyfill": "^0.1.0",
+    "error-polyfill": "^0.1.1",
     "o3": "^1.0.3"
   },
   "devDependencies": {
