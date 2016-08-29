@@ -30,11 +30,11 @@ module.exports = function () {
 
     this.Then(/^the stack of this instance should include the stack of the other error instances$/, function (next) {
         expect(anInstance.toString()).to.be("CompositeError: xxx");
-        expect(/CompositeError: xxx/.test(anInstance.stack)).to.be.ok();
-        expect(/caused by <a> Error: yyy/.test(anInstance.stack)).to.be.ok();
-        expect(/caused by <b> CompositeError: zzz/.test(anInstance.stack)).to.be.ok();
-        expect(/caused by <b.x> UserError: qqq/.test(anInstance.stack)).to.be.ok();
-        expect(/factory/.test(anInstance.stack)).to.be.ok();
+        expect(/CompositeError: xxx/.test(Error.getStackTrace(anInstance))).to.be.ok();
+        expect(/caused by <a> Error: yyy/.test(Error.getStackTrace(anInstance))).to.be.ok();
+        expect(/caused by <b> CompositeError: zzz/.test(Error.getStackTrace(anInstance))).to.be.ok();
+        expect(/caused by <b.x> UserError: qqq/.test(Error.getStackTrace(anInstance))).to.be.ok();
+        expect(/factory/.test(Error.getStackTrace(anInstance))).to.be.ok();
         next();
     });
 

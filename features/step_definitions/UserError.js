@@ -37,10 +37,10 @@ module.exports = function () {
     });
 
     this.Then(/^the stack property should contain the type, the message and the stack frames of this instance$/, function (next) {
-        expect(/UserError: the problem/.test(anInstance.stack)).to.be.ok();
-        expect(/thirdFn/.test(anInstance.stack.frames[0])).to.be.ok();
-        expect(/secondFn/.test(anInstance.stack.frames[1])).to.be.ok();
-        expect(/firstFn/.test(anInstance.stack.frames[2])).to.be.ok();
+        expect(/UserError: the problem/.test(Error.getStackTrace(anInstance))).to.be.ok();
+        expect(/thirdFn/.test(Error.getStackTrace(anInstance).frames[0])).to.be.ok();
+        expect(/secondFn/.test(Error.getStackTrace(anInstance).frames[1])).to.be.ok();
+        expect(/firstFn/.test(Error.getStackTrace(anInstance).frames[2])).to.be.ok();
         next();
     });
 
@@ -66,9 +66,9 @@ module.exports = function () {
             anInstance = new aDescendant("message");
         };
         factory();
-        if (anInstance.stack.frames[0].getFunction())
-            expect(anInstance.stack.frames[0].getFunction() === factory).to.be.ok();
-        expect(/factory/.test(anInstance.stack.frames[0].toString())).to.be.ok();
+        if (Error.getStackTrace(anInstance).frames[0].getFunction())
+            expect(Error.getStackTrace(anInstance).frames[0].getFunction() === factory).to.be.ok();
+        expect(/factory/.test(Error.getStackTrace(anInstance).frames[0].toString())).to.be.ok();
         next();
     });
 
@@ -86,13 +86,13 @@ module.exports = function () {
         "use strict";
         expect(function () {
             anInstance = new aDescendant();
-            anInstance.stack.toString();
+            Error.getStackTrace(anInstance).toString();
         }).to.not.throwError();
         next();
     });
 
     this.Then(/^the function value of the frames should be undefined because strict mode does not support arguments.callee$/, function (next) {
-        expect(anInstance.stack.frames[0].getFunction() === undefined).to.be.ok();
+        expect(Error.getStackTrace(anInstance).frames[0].getFunction() === undefined).to.be.ok();
         next();
     });
 

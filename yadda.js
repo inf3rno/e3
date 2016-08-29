@@ -34,5 +34,4 @@ function fixDynamicRequireByBrowserify() {
     // note: require_globify did not work, so I have to do this manually until I find a better solution. :S
     require("./features/step_definitions/UserError");
     require("./features/step_definitions/CompositeError");
-    require("./features/step_definitions/NativeError");
 }

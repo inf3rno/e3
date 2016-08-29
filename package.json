@@ -4,19 +4,11 @@
   "description": "e3 - Javascript Error Framework",
   "keywords": [
     "ES5",
-    "error",
+    "V8",
     "user error",
     "composite error",
     "extendable",
-    "stack trace",
-    "polyfill",
-    "v8",
-    "Error.captureStackTrace",
-    "Error.prepareStackTrace",
-    "Error.getStackTrace",
-    "UserError",
-    "CompositeError",
-    "stack"
+    "stack trace"
   ],
   "license": "MIT",
   "author": "László Lajos Jánszky",
@@ -34,8 +26,8 @@
     "test-karma": "karma start karma.conf.js"
   },
   "dependencies": {
-    "capability": "^0.2.4",
-    "o3": "^1.0.2"
+    "error-polyfill": "^0.1.0",
+    "o3": "^1.0.3"
   },
   "devDependencies": {
     "browserify": "10.2.6",

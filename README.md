@@ -89,7 +89,7 @@ catch (theProblem) {
         throw theProblem;
     console.log(theProblem);
         // MyError: problem
-    console.log(theProblem.stack.toString());
+    console.log(Error.getStackTrace(theProblem).toString());
         // MyError: problem
             // at (example.js:2:16)
             // at ...
@@ -123,7 +123,7 @@ try {
     }
 }
 catch (theComplexProblem) {
-    console.log(theComplexProblem.stack.toString());
+    console.log(Error.getStackTrace(theComplexProblem).toString());
         // MyCompositeError: complex problem
             // at (example.js:5:32)
             // at ...
@@ -137,62 +137,12 @@ catch (theComplexProblem) {
 
 The CompositeError can be a great help for example by nested validation errors or by reporting about multiple parallel async failures.
 
-#### Wrap native errors
-
-You can wrap native errors to get a similar stack than you have by user errors.
-
-```js
-try {
-    theNotDefinedFunction();
-}
-catch (error) {
-    console.log(new NativeError(error).stack.toString());
-        // ReferenceError: theNotDefinedFunction is not defined
-            // at ...
-            // ...
-}
-```
-
-The NativeError wrapper can help you log the native errors of your client side applications for further investigation.
-
-*Warning:*
-&nbsp;&nbsp;&nbsp;&nbsp;*The NativeError wrapper checks for `instanceof Error`, so it won't work with strings or inline objects!*
-
-### Stack traces and frames
-
-The current system tries to implement the [V8 Stack Trace API](https://github.com/v8/v8/wiki/Stack-Trace-API) by the actual environment as strictly as possible.
-
-#### Accessing stack and frames
-
-You can access the Stack instances by reading the `error.stack` property.
-
-```js
-var error = new UserError("message");
-console.log(error.stack instanceof Stack); // true
-```
-
-*Warning:*
-&nbsp;&nbsp;&nbsp;&nbsp;*The `error.stack` property is read-only by the classes defined in this lib!*
-&nbsp;&nbsp;&nbsp;&nbsp;*The `Error.prepareStackTrace` method is modified and it is read-only! This may interfere with other stack libs e.g. [cute-stack](https://github.com/davidmarkclements/cute-stack)!*
-
-By native errors you need a NativeError wrapper to access the `error.stack` property.
-
-```js
-try {
-    notDefinedFunction();
-} catch (error) {
-    var wrapper = new NativeError(error);
-    console.log(wrapper.stack instanceof Stack); // true
-}
-```
-
-*Warning:*
-&nbsp;&nbsp;&nbsp;&nbsp;*Reading the `error.stack` directly returns only a raw stack string in most of the environments, so it is not recommended!*
+#### Accessing stack frames
 
 If you have your Stack instance, you can access the frames array by reading the `stack.frames` property.
 
 ```js
-var stack = error.stack;
+var stack = Error.getStackTrace(error);
 var frames = stack.frames;
 for (var index in frames) {
     var frame = frames[index];
@@ -200,88 +150,6 @@ for (var index in frames) {
     console.log(frame.getFunction()); // e.g. function fn(){}
 }
 ```
-
-To access information about individual frames you can use these methods:
-
-- `frame.toString()` - Supported by Node.js, Chrome, Firefox, Internet Explorer, Opera and PhantomJS.
-- `frame.getThis()` - Supported by Node.js and Chrome.
-- `frame.getTypeName()` - Supported by Node.js and Chrome.
-- `frame.getFunction()` - Supported by Node.js, Chrome, Firefox, Internet Explorer, Opera and PhantomJS.
-- `frame.getFunctionName()` - Supported by Node.js and Chrome.
-- `frame.getMethodName()` - Supported by Node.js and Chrome.
-- `frame.getFileName()` - Supported by Node.js and Chrome.
-- `frame.getLineNumber()` - Supported by Node.js and Chrome.
-- `frame.getColumnNumber()` - Supported by Node.js and Chrome.
-- `frame.getEvalOrigin()` - Supported by Node.js and Chrome.
-- `frame.isTopLevel()` - Supported by Node.js and Chrome.
-- `frame.isEval()` - Supported by Node.js and Chrome.
-- `frame.isNative()` - Supported by Node.js and Chrome.
-- `frame.isConstructor()` - Supported by Node.js and Chrome.
-
-You can read more about them in the [V8 Stack Trace API documentation](https://github.com/v8/v8/wiki/Stack-Trace-API).
-
-#### Stack trace size limits
-
-Not implemented yet.
-
-### Handling uncaught errors and rejections
-
-Not implemented yet.
-
-### Differences between environments and modes
-
-Since there is no Stack Trace API standard, every browsers solves this problem differently. 
-I try to document what I've found about these differences as detailed as possible, so it will be easier to follow the code.
-
-Overriding the `error.stack` property with custom Stack instances
- 
- - by Node.js and Chrome the `Error.prepareStackTrace()` can override every `error.stack` automatically right by creation
- - by Firefox, Internet Explorer and Opera you cannot automatically override every `error.stack` by native errors
- - by PhantomJS you cannot override the `error.stack` property of native errors, it is not configurable
- 
-Capturing the current stack trace
- 
- - by Node.js, Chrome, Firefox and Opera the stack property is added by instantiating a native error
- - by Node.js and Chrome the stack creation is lazy loaded and cached, so the `Error.prepareStackTrace()` is called only by the first access
- - by Node.js and Chrome the current stack can be added to any object with `Error.captureStackTrace()`
- - by Internet Explorer the stack is created by throwing a native error
- - by PhantomJS the stack is created by throwing any object, but not a primitive
- 
-Accessing the stack
- 
- - by Node.js, Chrome, Firefox, Internet Explorer, Opera and PhantomJS you can use the `error.stack` property
- - by old Opera you have to use the `error.stacktrace` property to get the stack
- 
-Prefixes and postfixes on the stack string
- 
- - by Node.js, Chrome, Internet Explorer and Opera you have the `error.name` and the `error.message` in a `{name}: {message}` format at the beginning of the stack string
- - by Firefox and PhantomJS the stack string does not contain the `error.name` and the `error.message`
- - by Firefox you have an empty line at the end of the stack string
- 
-Accessing the stack frames array
-
- - by Node.js and Chrome you can access the frame objects directly by overriding the `Error.prepareStackTrace()`
- - by Firefox, Internet Explorer, PhantomJS, and Opera you need to parse the stack string in order to get the frames
- 
-The structure of the frame string
-
- - by Node.js and Chrome
-  - the frame string of calling a function from a module: `thirdFn (http://localhost/myModule.js:45:29)`
-  - the frame strings contain an `   at ` prefix, which is not present by the `frame.toString()` output, so it is added by the `stack.toString()`
- - by Firefox
-  - the frame string of calling a function from a module: `thirdFn@http://localhost/myModule.js:45:29`
- - by Internet Explorer
-  - the frame string of calling a function from a module: `   at thirdFn (http://localhost/myModule.js:45:29)`
- - by PhantomJS
-  - the frame string of calling a function from a module: `thirdFn@http://localhost/myModule.js:45:29`
- - by Opera
-  - the frame string of calling a function from a module: `   at thirdFn (http://localhost/myModule.js:45)`
-   
-Accessing information by individual frames
-
- - by Node.js and Chrome the `frame.getThis()` and the `frame.getFunction()` returns `undefined` by frames originate from [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) code
- - by Firefox, Internet Explorer, PhantomJS, and Opera the context of the function calls is not accessible, so the `frame.getThis()` cannot be implemented
- - by Firefox, Internet Explorer, PhantomJS, and Opera functions are not accessible with `arguments.callee.caller` by frames originate from strict mode, so by these frames `frame.getFunction()` can return only `undefined` (this is consistent with V8 behavior)
 
 ## License
 
