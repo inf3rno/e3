@@ -118,6 +118,19 @@ for (var index in frames) {
 }
 ```
 
+#### Using the stack as a string
+
+People tend to use the `error.stack` as it were a string. This is usually not a wrong assumption, so I added this feature to the lib.
+
+```js
+var error = new UserError("cause");
+var lines = error.stack.split("\n");
+for (var i in lines)
+    console.log(line[i]);
+```
+
+This should work despite the fact that the `error.stack` contains a `Stack` instance by `UserError`.
+
 ## License
 
 MIT - 2015 Jánszky László Lajos
